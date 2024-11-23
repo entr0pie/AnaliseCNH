@@ -1,19 +1,24 @@
 import pandas as pd
 
 
-def calcular_volumetria_safra(df_safra: pd.DataFrame, safra: str) -> pd.DataFrame:
-    total = len(df_safra)
+def calcular_volumetria(df: pd.DataFrame, nome_coluna: str, valor_coluna: str) -> pd.DataFrame:
+    """
+    Calcula a volumetria de Detratores, Neutros e Promotores em um DataFrame.
+    Retorna um DataFrame de apenas uma linha.
+    """
+    
+    total = len(df)
 
-    promotores = len(df_safra[df_safra['target'] == 'Promotor'])
-    neutros = len(df_safra[df_safra['target'] == 'Neutro'])
-    detratores = len(df_safra[df_safra['target'] == 'Detrator'])
+    promotores = len(df[df['target'] == 'Promotor'])
+    neutros = len(df[df['target'] == 'Neutro'])
+    detratores = len(df[df['target'] == 'Detrator'])
 
     porcentagem_promotores = promotores / total * 100    
     porcentagem_neutros = neutros / total * 100
     porcentagem_detratores = detratores / total * 100
 
     return pd.DataFrame({
-        'Safra': [safra],
+        f'{nome_coluna}': [valor_coluna],
         'Total': [total],
         'Promotores': [promotores],
         'Neutros': [neutros],
